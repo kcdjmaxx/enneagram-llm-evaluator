@@ -1,0 +1,268 @@
+{
+  "test_name": "Enneagram Test Assessment",
+  "columns": {
+    "A": { "type": 9, "label": "Nine" },
+    "B": { "type": 6, "label": "Six" },
+    "C": { "type": 3, "label": "Three" },
+    "D": { "type": 1, "label": "One" },
+    "E": { "type": 4, "label": "Four" },
+    "F": { "type": 2, "label": "Two" },
+    "G": { "type": 8, "label": "Eight" },
+    "H": { "type": 5, "label": "Five" },
+    "I": { "type": 7, "label": "Seven" }
+  },
+  "items": [
+    {
+      "id": 1,
+      "pair": [
+        { "side": "A", "text": "I've been romantic and imaginative.", "column": "E" },
+        { "side": "B", "text": "I've been pragmatic and down to earth.", "column": "B" }
+      ]
+    },
+    {
+      "id": 2,
+      "pair": [
+        { "side": "A", "text": "I have tended to take on confrontations.", "column": "G" },
+        { "side": "B", "text": "I have tended avoid confrontations.", "column": "A" }
+      ]
+    },
+    {
+      "id": 3,
+      "pair": [
+        { "side": "A", "text": "I have typically been diplomatic, charming, and ambitious.", "column": "C" },
+        { "side": "B", "text": "I have typically been direct, formal, and idealistic.", "column": "D" }
+      ]
+    },
+    {
+      "id": 4,
+      "pair": [
+        { "side": "A", "text": "I have tended to be focused and intense.", "column": "H" },
+        { "side": "B", "text": "I have tended to be spontaneous and fun-loving.", "column": "I" }
+      ]
+    },
+    {
+      "id": 5,
+      "pair": [
+        { "side": "A", "text": "I have been a hospitable person and have enjoyed welcoming new friends into my life.", "column": "F" },
+        { "side": "B", "text": "I have been a private person and have not mixed much with others.", "column": "E" }
+      ]
+    },
+    {
+      "id": 6,
+      "pair": [
+        { "side": "A", "text": "Generally, it's been easy to \"get a rise\" out of me.", "column": "B" },
+        { "side": "B", "text": "Generally, it's been difficult to \"get a rise\" out of me.", "column": "A" }
+      ]
+    },
+    {
+      "id": 7,
+      "pair": [
+        { "side": "A", "text": "I've been more of a \"street-smart\" survivor.", "column": "G" },
+        { "side": "B", "text": "I've been more of a \"high-minded\" idealist.", "column": "D" }
+      ]
+    },
+    {
+      "id": 8,
+      "pair": [
+        { "side": "A", "text": "I have needed to show affection to people.", "column": null },
+        { "side": "B", "text": "I have preferred to maintain a certain distance with people.", "column": null }
+      ]
+    },
+    {
+      "id": 9,
+      "pair": [
+        { "side": "A", "text": "When presented with a new experience, I've usually asked myself if it would be useful to me.", "column": null },
+        { "side": "B", "text": "When presented with a new experience, I've usually asked myself if it would be enjoyable.", "column": null }
+      ]
+    },
+    {
+      "id": 10,
+      "pair": [
+        { "side": "A", "text": "I have tended to focus too much on myself.", "column": null },
+        { "side": "B", "text": "I have tended to focus too much on others.", "column": null }
+      ]
+    },
+    {
+      "id": 11,
+      "pair": [
+        { "side": "A", "text": "Others have depended on my insight and knowledge.", "column": null },
+        { "side": "B", "text": "Others have depended on my strength and decisiveness.", "column": null }
+      ]
+    },
+    {
+      "id": 12,
+      "pair": [
+        { "side": "A", "text": "I have come across as being too unsure of myself.", "column": null },
+        { "side": "B", "text": "I have come across as being too sure of myself.", "column": null }
+      ]
+    },
+    {
+      "id": 13,
+      "pair": [
+        { "side": "A", "text": "I have been more relationship-oriented than goal-oriented.", "column": null },
+        { "side": "B", "text": "I have been more goal-oriented than relationship-oriented.", "column": null }
+      ]
+    },
+    {
+      "id": 14,
+      "pair": [
+        { "side": "A", "text": "I have not been able to speak up for myself very well.", "column": null },
+        { "side": "B", "text": "I have been outspoken—I've said what others wished they had the nerve to say.", "column": null }
+      ]
+    },
+    {
+      "id": 15,
+      "pair": [
+        { "side": "A", "text": "It's been difficult for me to stop considering alternatives and do something definite.", "column": null },
+        { "side": "B", "text": "It's been difficult for me to take it easy and be more flexible.", "column": null }
+      ]
+    },
+    {
+      "id": 16,
+      "pair": [
+        { "side": "A", "text": "I have tended to be hesitant and procrastinating.", "column": null },
+        { "side": "B", "text": "I have tended to be bold and domineering.", "column": null }
+      ]
+    },
+    {
+      "id": 17,
+      "pair": [
+        { "side": "A", "text": "My reluctance to get too involved has gotten me into trouble with people.", "column": null },
+        { "side": "B", "text": "My eagerness to have people depend on me has gotten me into trouble with them.", "column": null }
+      ]
+    },
+    {
+      "id": 18,
+      "pair": [
+        { "side": "A", "text": "Usually, I have been able to put my feelings aside to get the job done.", "column": null },
+        { "side": "B", "text": "Usually, I have needed to work through my feelings before I could act.", "column": null }
+      ]
+    },
+    {
+      "id": 19,
+      "pair": [
+        { "side": "A", "text": "Generally, I have been methodical and cautious.", "column": null },
+        { "side": "B", "text": "Generally, I have been adventurous and taken risks.", "column": null }
+      ]
+    },
+    {
+      "id": 20,
+      "pair": [
+        { "side": "A", "text": "I have tended to be a supportive, giving person who enjoys the company of others.", "column": null },
+        { "side": "B", "text": "I have tended to be a serious, reserved person who likes discussing issues.", "column": null }
+      ]
+    },
+    {
+      "id": 21,
+      "pair": [
+        { "side": "A", "text": "I've often felt the need to be a \"pillar of strength.\"", "column": null },
+        { "side": "B", "text": "I've often felt the need to perform perfectly.", "column": null }
+      ]
+    },
+    {
+      "id": 22,
+      "pair": [
+        { "side": "A", "text": "I've typically been interested in asking tough questions and maintaining my independence.", "column": null },
+        { "side": "B", "text": "I've typically been interested in maintaining my stability and peace of mind.", "column": null }
+      ]
+    },
+    {
+      "id": 23,
+      "pair": [
+        { "side": "A", "text": "I've been too hard-nosed and skeptical.", "column": null },
+        { "side": "B", "text": "I've been too soft-hearted and sentimental.", "column": null }
+      ]
+    },
+    {
+      "id": 24,
+      "pair": [
+        { "side": "A", "text": "I've often worried that I'm missing out on something better.", "column": null },
+        { "side": "B", "text": "I've often worried that if I let down my guard, someone will take advantage of me.", "column": null }
+      ]
+    },
+    {
+      "id": 25,
+      "pair": [
+        { "side": "A", "text": "My habit of being \"stand-offish\" has annoyed people.", "column": null },
+        { "side": "B", "text": "My habit of telling people what to do has annoyed people.", "column": null }
+      ]
+    },
+    {
+      "id": 26,
+      "pair": [
+        { "side": "A", "text": "Usually, when troubles have gotten to me, I have been able to \"tune them out.\"", "column": null },
+        { "side": "B", "text": "Usually, when troubles have gotten to me, I have treated myself to something I've enjoyed.", "column": null }
+      ]
+    },
+    {
+      "id": 27,
+      "pair": [
+        { "side": "A", "text": "I have depended upon my friends and they have known that they can depend on me.", "column": null },
+        { "side": "B", "text": "I have not depended on people; I have done things on my own.", "column": null }
+      ]
+    },
+    {
+      "id": 28,
+      "pair": [
+        { "side": "A", "text": "I have tended to be detached and preoccupied.", "column": null },
+        { "side": "B", "text": "I have tended to be moody and self-absorbed.", "column": null }
+      ]
+    },
+    {
+      "id": 29,
+      "pair": [
+        { "side": "A", "text": "I have liked to challenge people and \"shake them up.\"", "column": null },
+        { "side": "B", "text": "I have liked to comfort people and calm them down.", "column": null }
+      ]
+    },
+    {
+      "id": 30,
+      "pair": [
+        { "side": "A", "text": "I have generally been an outgoing, sociable person.", "column": null },
+        { "side": "B", "text": "I have generally been an earnest, self-disciplined person.", "column": null }
+      ]
+    },
+    {
+      "id": 31,
+      "pair": [
+        { "side": "A", "text": "I've usually been shy about showing my abilities.", "column": null },
+        { "side": "B", "text": "I've usually liked to let people know what I can do well.", "column": null }
+      ]
+    },
+    {
+      "id": 32,
+      "pair": [
+        { "side": "A", "text": "Pursuing my personal interests has been more important to me than having comfort and security.", "column": null },
+        { "side": "B", "text": "Having comfort and security has been more important to me than pursuing my personal interests.", "column": null }
+      ]
+    },
+    {
+      "id": 33,
+      "pair": [
+        { "side": "A", "text": "When I've had conflict with others, I've tended to withdraw.", "column": null },
+        { "side": "B", "text": "When I've had conflict with others, I've rarely backed down.", "column": null }
+      ]
+    },
+    {
+      "id": 34,
+      "pair": [
+        { "side": "A", "text": "I have given in too easily and let others push me around.", "column": null },
+        { "side": "B", "text": "I have been too uncompromising and demanding with others.", "column": null }
+      ]
+    },
+    {
+      "id": 35,
+      "pair": [
+        { "side": "A", "text": "I've been appreciated for my unsinkable spirit and great sense of humor.", "column": null },
+        { "side": "B", "text": "I've been appreciated for my quiet strength and exceptional generosity.", "column": null }
+      ]
+    },
+    {
+      "id": 36,
+      "pair": [
+        { "side": "A", "text": "Much of my success has been due to my talent for making a favorable impression.", "column": null },
+        { "side": "B", "text": "Much of my success has been achieved despite my lack of interest in developing \"interpersonal skills.\"", "column": null }
+      ]
+    }
+  ]
+}
