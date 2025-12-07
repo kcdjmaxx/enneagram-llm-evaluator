@@ -1,0 +1,28 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+
+# --- MacOS ---
+.DS_Store
+
+# --- Results & Logs (VERY IMPORTANT) ---
+results/
+*.md
+*.pdf
+
+# If you want ONLY auto-generated Markdown ignored, but keep README.md:
+# (Uncomment this instead of the line above)
+# results/
+# enneagram_multi_*.md
+
+# --- Virtual environment ---
+*.sqlite3
+
+# --- Ollama temp ---
+ollama_cache/
