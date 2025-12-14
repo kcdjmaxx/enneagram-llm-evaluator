@@ -630,7 +630,7 @@ def main():
 
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
-    out_path = outdir / f"enneagram-multi_{args.model}_{timestamp}_v3_unlabeled.md"
+    out_path = outdir / f"{args.model}_enneagram-multi_{timestamp}_v3_unlabeled.md"
 
     lines: List[str] = []
     lines.append(f"# Enneagram LLM Multi-Run Report (Model: {args.model}, v3 Unlabeled)")

@@ -13,13 +13,14 @@ venv/
 
 # --- Results & Logs (VERY IMPORTANT) ---
 results/
-*.md
+logs/
 *.pdf
 
-# If you want ONLY auto-generated Markdown ignored, but keep README.md:
-# (Uncomment this instead of the line above)
-# results/
-# enneagram_multi_*.md
+# Auto-generated test results (but allow README.md, CLAUDE.md, etc.)
+enneagram-assessment-*.md
+enneagram-test-assessment-*.md
+enneagram-multi_*.md
+enneagram_multi_*.md
 
 # --- Virtual environment ---
 *.sqlite3
