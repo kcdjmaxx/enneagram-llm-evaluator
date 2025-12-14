@@ -11,6 +11,9 @@ venv/
 # --- MacOS ---
 .DS_Store
 
+# --- Local development context ---
+CLAUDE.md
+
 # --- Results & Logs (VERY IMPORTANT) ---
 results/
 logs/
