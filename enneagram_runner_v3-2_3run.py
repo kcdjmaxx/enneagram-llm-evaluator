@@ -2,7 +2,7 @@
 """
 Enneagram LLM Multi-Run Runner (v3-2, unlabeled prompts)
 
-- Talks to a local Ollama instance (HTTP API) to have a model take:
+- Talks to an LLM provider (Ollama local, Anthropic, OpenAI, or OpenRouter) to have a model take:
   1. Likert-style Enneagram test (tests/enneagram_likert.json)
   2. Paired-question Enneagram test (tests/enneagram_test.json)
 
@@ -39,12 +39,12 @@ from typing import Dict, List, Tuple, Any
 
 import requests
 
+from providers import create_provider, LLMProvider
+
 
 # -----------------------------------------------------------------------------
 # Config
 # -----------------------------------------------------------------------------
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
 
 HEAD_TYPES = [5, 6, 7]
 HEART_TYPES = [2, 3, 4]
@@ -72,29 +72,15 @@ def mean_std(values: List[float]) -> Tuple[float, float]:
 
 
 # -----------------------------------------------------------------------------
-# Ollama helpers
+# LLM helpers
 # -----------------------------------------------------------------------------
 
-def ollama_generate(model: str, prompt: str, temperature: float = None) -> str:
-    """
-    Call Ollama's /api/generate endpoint (non-streaming) and return the response text.
-    """
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-    }
-    # Only add temperature if specified
-    if temperature is not None:
-        payload["temperature"] = temperature
-
-    resp = requests.post(OLLAMA_URL, json=payload, timeout=600)
-    resp.raise_for_status()
-    data = resp.json()
-    return data.get("response", "").strip()
+def llm_generate(provider: LLMProvider, prompt: str, temperature: float = None) -> str:
+    """Generate text using whatever provider is configured."""
+    return provider.generate(prompt, temperature)
 
 
-def ask_choice_ab(model: str, question_text: str, temperature: float = None) -> Tuple[str, str]:
+def ask_choice_ab(provider: LLMProvider, question_text: str, temperature: float = None) -> Tuple[str, str]:
     """
     Ask the model to choose A or B.
     Returns (normalized_choice, raw_response).
@@ -118,7 +104,7 @@ def ask_choice_ab(model: str, question_text: str, temperature: float = None) -> 
         """
     ).strip()
 
-    raw = ollama_generate(model, prompt, temperature).strip()
+    raw = llm_generate(provider, prompt, temperature).strip()
     upper = raw.upper()
     match = re.search(r"\b([AB])\b", upper)
     if match:
@@ -132,7 +118,7 @@ def ask_choice_ab(model: str, question_text: str, temperature: float = None) -> 
     return "A", raw  # ultra-defensive default
 
 
-def ask_likert_1_to_5(model: str, question_text: str, temperature: float = None) -> Tuple[int, str]:
+def ask_likert_1_to_5(provider: LLMProvider, question_text: str, temperature: float = None) -> Tuple[int, str]:
     """
     Ask the model to rate from 1 to 5.
     Returns (rating, raw_response).
@@ -158,7 +144,7 @@ def ask_likert_1_to_5(model: str, question_text: str, temperature: float = None)
         """
     ).strip()
 
-    raw = ollama_generate(model, prompt, temperature).strip()
+    raw = llm_generate(provider, prompt, temperature).strip()
     match = re.search(r"\b([1-5])\b", raw)
     if match:
         return int(match.group(1)), raw
@@ -251,7 +237,7 @@ def derive_profile_from_scores(type_scores: Dict[int, int]) -> Dict[str, Any]:
 # -----------------------------------------------------------------------------
 
 def run_likert_once(
-    model: str,
+    provider: LLMProvider,
     json_path: pathlib.Path,
     run_index: int,
     temperature: float = None,
@@ -282,7 +268,7 @@ def run_likert_once(
         for idx, stmt in enumerate(stmts, start=1):
             # IMPORTANT: no type or Enneagram labels in the prompt.
             q_text = f"[Item {global_index}] {stmt}"
-            rating, raw = ask_likert_1_to_5(model, q_text, temperature)
+            rating, raw = ask_likert_1_to_5(provider, q_text, temperature)
 
             type_key_scores[type_key] += rating
             if e_type is not None:
@@ -325,7 +311,7 @@ def run_likert_once(
 # -----------------------------------------------------------------------------
 
 def run_paired_once(
-    model: str,
+    provider: LLMProvider,
     json_path: pathlib.Path,
     run_index: int,
     temperature: float = None,
@@ -362,7 +348,7 @@ def run_paired_once(
             """
         ).strip()
 
-        choice, raw = ask_choice_ab(model, question_text, temperature)
+        choice, raw = ask_choice_ab(provider, question_text, temperature)
         chosen = a if choice == "A" else b
         col = chosen["column"]
         counts_by_column[col] += 1
@@ -738,13 +724,24 @@ def build_markdown_report(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Have an Ollama LLM take Enneagram tests (Likert + paired) "
+        description="Have an LLM take Enneagram tests (Likert + paired) "
                     "multiple times and write a single markdown report (v3-2, unlabeled prompts)."
     )
     parser.add_argument(
         "--model",
         required=True,
-        help="Ollama model name, e.g. 'mistral', 'llama3', 'qwen2:7b', etc.",
+        help="Model name, e.g. 'mistral' (ollama), 'claude-sonnet-4-20250514' (anthropic), 'gpt-4o' (openai).",
+    )
+    parser.add_argument(
+        "--provider",
+        default="ollama",
+        choices=["ollama", "anthropic", "openai", "openrouter"],
+        help="LLM provider (default: ollama). Cloud providers require --api-key or env var.",
+    )
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="API key for cloud providers. Can also set ANTHROPIC_API_KEY, OPENAI_API_KEY, or OPENROUTER_API_KEY env vars.",
     )
     parser.add_argument(
         "--tests-dir",
@@ -770,6 +767,10 @@ def main():
     )
     args = parser.parse_args()
 
+    # Create the LLM provider
+    provider = create_provider(args.provider, model=args.model, api_key=args.api_key)
+    print(f"Using provider: {provider}")
+
     tests_dir = pathlib.Path(args.tests_dir)
     outdir = pathlib.Path(args.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
@@ -787,18 +788,18 @@ def main():
     paired_runs: List[Dict[str, Any]] = []
 
     for i in range(1, args.runs_per_test + 1):
-        likert_runs.append(run_likert_once(args.model, likert_path, i, args.temperature))
+        likert_runs.append(run_likert_once(provider, likert_path, i, args.temperature))
     for i in range(1, args.runs_per_test + 1):
-        paired_runs.append(run_paired_once(args.model, paired_path, i, args.temperature))
+        paired_runs.append(run_paired_once(provider, paired_path, i, args.temperature))
 
     # Build markdown report
     now = dt.datetime.now()
-    slug_model = slugify(args.model)
+    slug_model = slugify(provider.model)
     timestamp_str = now.strftime("%Y-%m-%d_%H-%M-%S")
     out_path = outdir / f"{slug_model}_enneagram-multi_{timestamp_str}_v3-2_unlabeled.md"
 
     md = build_markdown_report(
-        model=args.model,
+        model=provider.model,
         timestamp=now,
         runs_per_test=args.runs_per_test,
         likert_runs=likert_runs,

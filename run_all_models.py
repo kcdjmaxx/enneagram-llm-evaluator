@@ -197,7 +197,7 @@ def get_available_models():
         return []
 
 
-def run_test_script(script_name, model_name, runs_per_test=3):
+def run_test_script(script_name, model_name, runs_per_test=3, provider="ollama", api_key=None):
     """Run a single test script for a given model.
 
     Returns tuple: (success: bool, error_msg: str, stdout: str, stderr: str)
@@ -206,8 +206,11 @@ def run_test_script(script_name, model_name, runs_per_test=3):
         "python3",
         script_name,
         "--model", model_name,
+        "--provider", provider,
         "--runs-per-test", str(runs_per_test)
     ]
+    if api_key:
+        cmd.extend(["--api-key", api_key])
 
     print(f"Running: {' '.join(cmd)}")
 
@@ -233,7 +236,7 @@ def run_test_script(script_name, model_name, runs_per_test=3):
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
-        description="Run Enneagram tests on all available Ollama models"
+        description="Run Enneagram tests on all available models"
     )
     parser.add_argument(
         "--exclude",
@@ -242,6 +245,23 @@ def main():
         dest="exclude",
         metavar="MODEL",
         help="Exclude specific model(s) from testing (can be specified multiple times)"
+    )
+    parser.add_argument(
+        "--provider",
+        default="ollama",
+        choices=["ollama", "anthropic", "openai", "openrouter"],
+        help="LLM provider (default: ollama). Cloud providers require --api-key or env var.",
+    )
+    parser.add_argument(
+        "--api-key",
+        default=None,
+        help="API key for cloud providers.",
+    )
+    parser.add_argument(
+        "--models",
+        nargs="+",
+        metavar="MODEL",
+        help="Explicit list of models to test (required for cloud providers, optional for ollama).",
     )
     args = parser.parse_args()
 
@@ -253,8 +273,15 @@ def main():
     logger.log("="*80)
 
     # Get available models
-    logger.log("Discovering available Ollama models...")
-    all_models = get_available_models()
+    if args.models:
+        logger.log(f"Using explicit model list for provider '{args.provider}'...")
+        all_models = args.models
+    elif args.provider == "ollama":
+        logger.log("Discovering available Ollama models...")
+        all_models = get_available_models()
+    else:
+        logger.log(f"Error: --models is required for provider '{args.provider}' (no auto-discovery).")
+        sys.exit(1)
 
     if not all_models:
         logger.log("No models found. Exiting.")
@@ -300,7 +327,9 @@ def main():
             start_time = logger.log_test_start(model, script, test_num, total_tests)
 
             # Run the test
-            success, error_msg, stdout, stderr = run_test_script(script, model, runs_per_test=3)
+            success, error_msg, stdout, stderr = run_test_script(
+                script, model, runs_per_test=3, provider=args.provider, api_key=args.api_key
+            )
 
             # Log test end
             logger.log_test_end(model, script, success, start_time, error_msg, stdout, stderr)

@@ -30,3 +30,4 @@ enneagram_multi_*.md
 
 # --- Ollama temp ---
 ollama_cache/
+.aider*
